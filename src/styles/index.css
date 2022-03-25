@@ -23,7 +23,7 @@ body{
     /* margin: auto 10px; */
     width: 70px;
     height: 70px;
-    border-radius: 15px;
+    border-radius: 50px;
   }
   header form{
       display: flex;
@@ -46,7 +46,7 @@ body{
       gap: 20px;
   }
   .cards{
-      box-shadow:5px 5px 20px gainsboro;
+      box-shadow:5px 4px 5px rgba(0, 3, 153, 0.2);
       background-color: azure;
         width: 200px;
         text-align: center;

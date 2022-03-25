@@ -9,41 +9,60 @@ const promises = urls.map(url => fetch(url).then(res => res.json()))
 
 const loadDataButtonElement = document.querySelector('.header-btn')
 const cardContainerElement = document.querySelector('.cards-container')
-
+let nameFound = 0
 loadDataButtonElement.addEventListener('click', () => {
-    cardContainerElement.innerHTML='';
-Promise
-  .all(promises)
-  .then(pages => {
-    // const characters = 
-    pages.flatMap(page => page.results).forEach(renderCharacter)
-    // characters.
-  })
+    cardContainerElement.innerHTML = ''
+    Promise.all(promises).then((pages) => {
+        // const characters =
+        pages.flatMap((page) => page.results).forEach(renderCharacter)
+        if (nameFound === 0) {
+            alert('No Character found with the name:' + searchElement.value)
+        }
+        // characters.
+    })
 })
 
 function renderCharacter(character) {
     const cardContainerElement = document.querySelector('.cards-container')
-    const filterElement=document.querySelector("#character-state")
- if(filterElement.value==='All'){
-    addCardElements(character);
-    }
-     if(filterElement.value==='Alive'){
-        if(character.status==='Alive'){
-        addCardElements(character);
+    const filterElement = document.querySelector('#character-state')
+    const searchElement = document.querySelector('#search')
+
+    // Filter by Character Status
+    if (searchElement.value == '') {
+        if (filterElement.value === 'All') {
+            addCardElements(character)
         }
-        
-          }
-          if(filterElement.value==='Dead'){
-        if(character.status==='Dead'){
-            addCardElements(character);
-        }
-          }
-          if(filterElement.value==='Unknown'){
-            if(character.status==='unknown'){
-                addCardElements(character);
+        if (filterElement.value === 'Alive') {
+            if (character.status === 'Alive') {
+                addCardElements(character)
             }
-              }
+        }
+        if (filterElement.value === 'Dead') {
+            if (character.status === 'Dead') {
+                addCardElements(character)
+            }
+        }
+        if (filterElement.value === 'Unknown') {
+            if (character.status === 'unknown') {
+                addCardElements(character)
+            }
+        }
+    }
+    // Search the specific name!
+    if (searchElement.value !== '') {
+        console.log(searchElement.value)
+        if (
+            character.name
+                .toLowerCase()
+                .includes(searchElement.value.toLowerCase())
+        ) {
+            filterElement.value = 'All'
+            addCardElements(character)
+            nameFound++
+        }
+    }
 }
+// Function to add Element to CardContainer
 function addCardElements(character){
     const newCardElement = document.createElement('article')
     newCardElement.classList.add('cards')
