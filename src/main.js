@@ -24,18 +24,73 @@ Promise
 
 
 function renderCharacter(character) {
+    const filterElement=document.querySelector('[list="character-state"]')
+    if(filterElement.value===''){
   const cardContainerElement = document.querySelector('.cards-container')
   
   const newCardElement = document.createElement('article')
   newCardElement.classList.add('cards')
   cardContainerElement.append(newCardElement)
 
+  //const newImageElement = document.createElement('img')
+  //newImageElement.setAttribute('src', character.image)
+  //cardContainerElement.append(newImageElement)
   const newImageElement = document.createElement('img')
   newImageElement.setAttribute('src', character.image)
-  cardContainerElement.append(newImageElement)
+  newCardElement.append(newImageElement)
 
   const paragraphElement = document.createElement('p')
   paragraphElement.textContent = character.name;
   newCardElement.append(paragraphElement)
 
+    }
+ if(filterElement.value==='Alive'){
+        if(character.status==='Alive'){
+            const cardContainerElement = document.querySelector('.cards-container')
+        
+            const newCardElement = document.createElement('article')
+            newCardElement.classList.add('cards')
+            cardContainerElement.append(newCardElement)
+          
+            //const newImageElement = document.createElement('img')
+            //newImageElement.setAttribute('src', character.image)
+            //cardContainerElement.append(newImageElement)
+            const newImageElement = document.createElement('img')
+            newImageElement.setAttribute('src', character.image)
+            newCardElement.append(newImageElement)
+          
+            const paragraphElement = document.createElement('p')
+            paragraphElement.textContent = character.name;
+            newCardElement.append(paragraphElement)
+
+            const paragraphStatusElement = document.createElement('p')
+            paragraphStatusElement.textContent = character.status;
+            newCardElement.append(paragraphStatusElement)
+        }
+        
+          }
+ if(filterElement.value==='Dead'){
+        if(character.status==='Dead'){
+            const cardContainerElement = document.querySelector('.cards-container')
+        
+            const newCardElement = document.createElement('article')
+            newCardElement.classList.add('cards')
+            cardContainerElement.append(newCardElement)
+          
+            //const newImageElement = document.createElement('img')
+            //newImageElement.setAttribute('src', character.image)
+            //cardContainerElement.append(newImageElement)
+            const newImageElement = document.createElement('img')
+            newImageElement.setAttribute('src', character.image)
+            newCardElement.append(newImageElement)
+          
+            const paragraphElement = document.createElement('p')
+            paragraphElement.textContent = character.name;
+            newCardElement.append(paragraphElement)
+
+            const paragraphStatusElement = document.createElement('p')
+            paragraphStatusElement.textContent = character.status;
+            newCardElement.append(paragraphStatusElement)
+        }
+          }
 }
