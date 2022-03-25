@@ -7,99 +7,76 @@ const urls = Array(numPages)
 
 const promises = urls.map(url => fetch(url).then(res => res.json()))
 
-
-
 const loadDataButtonElement = document.querySelector('.header-btn')
 const cardContainerElement = document.querySelector('.cards-container')
-
+let nameFound = 0
 loadDataButtonElement.addEventListener('click', () => {
-    cardContainerElement.innerHTML='';
-Promise
-  .all(promises)
-  .then(pages => {
-    // const characters = 
-    pages.flatMap(page => page.results).forEach(renderCharacter)
-    // characters.
-  })
+    cardContainerElement.innerHTML = ''
+    Promise.all(promises).then((pages) => {
+        // const characters =
+        pages.flatMap((page) => page.results).forEach(renderCharacter)
+        if (nameFound === 0) {
+            alert('No Character found with the name:' + searchElement.value)
+        }
+        // characters.
+    })
 })
 
 function renderCharacter(character) {
     const cardContainerElement = document.querySelector('.cards-container')
-    const filterElement=document.querySelector('[list="character-state"]')
-    if(filterElement.value===''){
-  
-  const newCardElement = document.createElement('article')
-  newCardElement.classList.add('cards')
-  cardContainerElement.append(newCardElement)
+    const filterElement = document.querySelector('#character-state')
+    const searchElement = document.querySelector('#search')
 
-  const newImageElement = document.createElement('img')
-  newImageElement.setAttribute('src', character.image)
-  newCardElement.append(newImageElement)
-
-  const paragraphElement = document.createElement('p')
-  paragraphElement.textContent = character.name;
-  newCardElement.append(paragraphElement)
-
-    }
-     if(filterElement.value==='Alive'){
-        if(character.status==='Alive'){
-        
-            const newCardElement = document.createElement('article')
-            newCardElement.classList.add('cards')
-            cardContainerElement.append(newCardElement)
-          
-            const newImageElement = document.createElement('img')
-            newImageElement.setAttribute('src', character.image)
-            newCardElement.append(newImageElement)
-          
-            const paragraphElement = document.createElement('p')
-            paragraphElement.textContent = character.name;
-            newCardElement.append(paragraphElement)
-
-            const paragraphStatusElement = document.createElement('p')
-            paragraphStatusElement.textContent = character.status;
-            newCardElement.append(paragraphStatusElement)
+    // Filter by Character Status
+    if (searchElement.value == '') {
+        if (filterElement.value === 'All') {
+            addCardElements(character)
         }
-        
-          }
-          if(filterElement.value==='Dead'){
-        if(character.status==='Dead'){
-        
-            const newCardElement = document.createElement('article')
-            newCardElement.classList.add('cards')
-            cardContainerElement.append(newCardElement)
-          
-            const newImageElement = document.createElement('img')
-            newImageElement.setAttribute('src', character.image)
-            newCardElement.append(newImageElement)
-          
-            const paragraphElement = document.createElement('p')
-            paragraphElement.textContent = character.name;
-            newCardElement.append(paragraphElement)
-
-            const paragraphStatusElement = document.createElement('p')
-            paragraphStatusElement.textContent = character.status;
-            newCardElement.append(paragraphStatusElement)
-        }
-          }
-          if(filterElement.value==='Unknown'){
-            if(character.status==='unknown'){
-            
-                const newCardElement = document.createElement('article')
-                newCardElement.classList.add('cards')
-                cardContainerElement.append(newCardElement)
-              
-                const newImageElement = document.createElement('img')
-                newImageElement.setAttribute('src', character.image)
-                newCardElement.append(newImageElement)
-              
-                const paragraphElement = document.createElement('p')
-                paragraphElement.textContent = character.name;
-                newCardElement.append(paragraphElement)
-    
-                const paragraphStatusElement = document.createElement('p')
-                paragraphStatusElement.textContent = character.status;
-                newCardElement.append(paragraphStatusElement)
+        if (filterElement.value === 'Alive') {
+            if (character.status === 'Alive') {
+                addCardElements(character)
             }
-              }
+        }
+        if (filterElement.value === 'Dead') {
+            if (character.status === 'Dead') {
+                addCardElements(character)
+            }
+        }
+        if (filterElement.value === 'Unknown') {
+            if (character.status === 'unknown') {
+                addCardElements(character)
+            }
+        }
+    }
+    // Search the specific name!
+    if (searchElement.value !== '') {
+        console.log(searchElement.value)
+        if (
+            character.name
+                .toLowerCase()
+                .includes(searchElement.value.toLowerCase())
+        ) {
+            filterElement.value = 'All'
+            addCardElements(character)
+            nameFound++
+        }
+    }
+}
+// Function to add Element to CardContainer
+function addCardElements(character){
+    const newCardElement = document.createElement('article')
+    newCardElement.classList.add('cards')
+    cardContainerElement.append(newCardElement)
+  
+    const newImageElement = document.createElement('img')
+    newImageElement.setAttribute('src', character.image)
+    newCardElement.append(newImageElement)
+  
+    const paragraphElement = document.createElement('p')
+    paragraphElement.textContent = character.name;
+    newCardElement.append(paragraphElement)
+
+    const paragraphStatusElement = document.createElement('p')
+    paragraphStatusElement.textContent = character.status;
+    newCardElement.append(paragraphStatusElement)
 }
