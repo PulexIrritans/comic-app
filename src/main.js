@@ -10,9 +10,10 @@ const promises = urls.map(url => fetch(url).then(res => res.json()))
 
 
 const loadDataButtonElement = document.querySelector('.header-btn')
+const cardContainerElement = document.querySelector('.cards-container')
 
 loadDataButtonElement.addEventListener('click', () => {
-
+    cardContainerElement.innerHTML='';
 Promise
   .all(promises)
   .then(pages => {
@@ -22,19 +23,15 @@ Promise
   })
 })
 
-
 function renderCharacter(character) {
+    const cardContainerElement = document.querySelector('.cards-container')
     const filterElement=document.querySelector('[list="character-state"]')
     if(filterElement.value===''){
-  const cardContainerElement = document.querySelector('.cards-container')
   
   const newCardElement = document.createElement('article')
   newCardElement.classList.add('cards')
   cardContainerElement.append(newCardElement)
 
-  //const newImageElement = document.createElement('img')
-  //newImageElement.setAttribute('src', character.image)
-  //cardContainerElement.append(newImageElement)
   const newImageElement = document.createElement('img')
   newImageElement.setAttribute('src', character.image)
   newCardElement.append(newImageElement)
@@ -44,17 +41,13 @@ function renderCharacter(character) {
   newCardElement.append(paragraphElement)
 
     }
- if(filterElement.value==='Alive'){
+     if(filterElement.value==='Alive'){
         if(character.status==='Alive'){
-            const cardContainerElement = document.querySelector('.cards-container')
         
             const newCardElement = document.createElement('article')
             newCardElement.classList.add('cards')
             cardContainerElement.append(newCardElement)
           
-            //const newImageElement = document.createElement('img')
-            //newImageElement.setAttribute('src', character.image)
-            //cardContainerElement.append(newImageElement)
             const newImageElement = document.createElement('img')
             newImageElement.setAttribute('src', character.image)
             newCardElement.append(newImageElement)
@@ -69,17 +62,13 @@ function renderCharacter(character) {
         }
         
           }
- if(filterElement.value==='Dead'){
+          if(filterElement.value==='Dead'){
         if(character.status==='Dead'){
-            const cardContainerElement = document.querySelector('.cards-container')
         
             const newCardElement = document.createElement('article')
             newCardElement.classList.add('cards')
             cardContainerElement.append(newCardElement)
           
-            //const newImageElement = document.createElement('img')
-            //newImageElement.setAttribute('src', character.image)
-            //cardContainerElement.append(newImageElement)
             const newImageElement = document.createElement('img')
             newImageElement.setAttribute('src', character.image)
             newCardElement.append(newImageElement)
@@ -93,4 +82,24 @@ function renderCharacter(character) {
             newCardElement.append(paragraphStatusElement)
         }
           }
+          if(filterElement.value==='Unknown'){
+            if(character.status==='unknown'){
+            
+                const newCardElement = document.createElement('article')
+                newCardElement.classList.add('cards')
+                cardContainerElement.append(newCardElement)
+              
+                const newImageElement = document.createElement('img')
+                newImageElement.setAttribute('src', character.image)
+                newCardElement.append(newImageElement)
+              
+                const paragraphElement = document.createElement('p')
+                paragraphElement.textContent = character.name;
+                newCardElement.append(paragraphElement)
+    
+                const paragraphStatusElement = document.createElement('p')
+                paragraphStatusElement.textContent = character.status;
+                newCardElement.append(paragraphStatusElement)
+            }
+              }
 }
