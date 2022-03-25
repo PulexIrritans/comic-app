@@ -9,8 +9,10 @@ body{
     background-color: var(--body-BC);
   }
   header{
+    padding: 10px;
     display: flex;
     justify-content: center;
+    align-items: center;
     /*grid-template-columns:1fr 2fr 1.2fr ;*/
     background-color:var(--Header-Footer-BC) ;
     height: 10vh;
@@ -18,7 +20,7 @@ body{
     top: 0;*/
   }
   header img{
-    margin: auto 10px;
+    /* margin: auto 10px; */
     width: 70px;
     height: 70px;
     border-radius: 15px;
@@ -30,8 +32,7 @@ body{
       justify-content: center;
       gap: 10px;
   }
-  header button{
-      margin: 30px 15px 30px 0;
+  .header-btn{
   }
   main{
     padding: 20px;
@@ -41,7 +42,7 @@ body{
   }
   .cards-container{
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 20px;
   }
