@@ -1,3 +1,54 @@
 @import "_base.css";
 @import "_fonts.css";
 @import "_colors.css";
+*{box-sizing: border-box;}
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: center;
+    
+  }
+  header{
+    display: grid;
+    grid-template-columns:1fr 2fr 1.2fr ;
+    background-color:var(--Header-Footer-BC) ;
+    height: 10vh;
+    position:sticky;
+    top: 0;
+  }
+  header img{
+    width: 80px;
+    margin:5px;
+  }
+  header form{
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      justify-content: center;
+      gap: 10px;
+  }
+  header button{
+      margin: 30px 15px 30px 0;
+  }
+  main{
+      height: 85vh;
+  }
+  .cards-container{
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      flex-direction: column;
+  }
+  .cards{
+      box-shadow:5px 5px 12px gainsboro;
+  }
+
+  footer{
+    display: flex;
+    justify-content: space-between;
+    background-color:var(--Header-Footer-BC) ;
+    height: 5vh;
+    color: rgb(255, 255, 255);
+    justify-content: center;
+  }
