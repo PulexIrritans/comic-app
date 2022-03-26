@@ -35,7 +35,7 @@ loadDataButtonElement.addEventListener("click", () => {
 
 function getFilteredCharacters(character) {
   const filterElement = document.querySelector("#character-state");
-  
+
   // Filter by Character Status
   if (searchElement.value === "") {
     if (filterElement.value === "All") {
@@ -54,7 +54,7 @@ function getFilteredCharacters(character) {
         namesFoundCount++
       }
     }
-    if (filterElement.value === "Unknown") {
+    if (filterElement.value === "unknown") {
       if (character.status === "unknown") {
         filteredCharactersArray.push(character)
         namesFoundCount++
@@ -80,7 +80,7 @@ function addCardElements(filteredCharacters) {
     const cardContainerElement = document.querySelector(".cards-container")
 
     filteredCharacters.forEach((character) => {
-      const newCardElement = document.createElement("article");
+      const newCardElement = document.createElement("li");
       newCardElement.classList.add("cards")
       cardContainerElement.append(newCardElement)
 
