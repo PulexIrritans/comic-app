@@ -1,82 +1,99 @@
-const baseUrl = 'https://rickandmortyapi.com/api/character?page=';
+// API Fetch
+const baseUrl = "https://rickandmortyapi.com/api/character?page=";
 const numPages = 5;
 
 const urls = Array(numPages)
-              .fill() // [undefined, undefined, ...]
-              .map((_, index) => baseUrl + (index + 1));
+  .fill() // [undefined, undefined, ...]
+  .map((_, index) => baseUrl + (index + 1));
 
-const promises = urls.map(url => fetch(url).then(res => res.json()))
+const promises = urls.map((url) => fetch(url).then((res) => res.json()));
 
-const loadDataButtonElement = document.querySelector('.header-btn')
-const cardContainerElement = document.querySelector('.cards-container')
-let nameFound = 0
-loadDataButtonElement.addEventListener('click', () => {
-    cardContainerElement.innerHTML = ''
-    Promise.all(promises).then((pages) => {
-        // const characters =
-        pages.flatMap((page) => page.results).forEach(renderCharacter)
-        if (nameFound === 0) {
-            alert('No Character found with the name:' + searchElement.value)
-        }
-        // characters.
-    })
+// Global variables and constants
+const loadDataButtonElement = document.querySelector(".header-btn");
+const cardContainerElement = document.querySelector(".cards-container");
+const searchElement = document.querySelector("#search");
+let filteredCharactersArray;
+let namesFoundCount;
+
+// Load Button Event Listener
+loadDataButtonElement.addEventListener("click", () => {
+  namesFoundCount = 0;
+  filteredCharactersArray = [];
+
+  cardContainerElement.innerHTML = "";
+  Promise.all(promises).then((pages) => {
+      pages.flatMap((page) => page.results).forEach(character => {
+          getFilteredCharacters(character)
+      })
+      if (namesFoundCount === 0) {
+        alert("No Character found with the name: " + searchElement.value)
+      } else {
+      addCardElements(filteredCharactersArray)
+      }
 })
+});
 
-function renderCharacter(character) {
-    const cardContainerElement = document.querySelector('.cards-container')
-    const filterElement = document.querySelector('#character-state')
-    const searchElement = document.querySelector('#search')
-
-    // Filter by Character Status
-    if (searchElement.value == '') {
-        if (filterElement.value === 'All') {
-            addCardElements(character)
-        }
-        if (filterElement.value === 'Alive') {
-            if (character.status === 'Alive') {
-                addCardElements(character)
-            }
-        }
-        if (filterElement.value === 'Dead') {
-            if (character.status === 'Dead') {
-                addCardElements(character)
-            }
-        }
-        if (filterElement.value === 'Unknown') {
-            if (character.status === 'unknown') {
-                addCardElements(character)
-            }
-        }
+function getFilteredCharacters(character) {
+  const filterElement = document.querySelector("#character-state");
+  
+  // Filter by Character Status
+  if (searchElement.value === "") {
+    if (filterElement.value === "All") {
+      filteredCharactersArray.push(character);
+      namesFoundCount++
     }
-    // Search the specific name!
-    if (searchElement.value !== '') {
-        console.log(searchElement.value)
-        if (
-            character.name
-                .toLowerCase()
-                .includes(searchElement.value.toLowerCase())
-        ) {
-            filterElement.value = 'All'
-            addCardElements(character)
-            nameFound++
-        }
+    if (filterElement.value === "Alive") {
+      if (character.status === "Alive") {
+        filteredCharactersArray.push(character);
+        namesFoundCount++
+      }
     }
+    if (filterElement.value === "Dead") {
+      if (character.status === "Dead") {
+        filteredCharactersArray.push(character);
+        namesFoundCount++
+      }
+    }
+    if (filterElement.value === "Unknown") {
+      if (character.status === "unknown") {
+        filteredCharactersArray.push(character)
+        namesFoundCount++
+      }
+    }
+  }
+  
+  // Filter by specific name
+  if (searchElement.value !== "") {
+    if (
+      character.name.toLowerCase().includes(searchElement.value.toLowerCase())
+    ) {
+      filterElement.value = "All";
+      filteredCharactersArray.push(character);
+      namesFoundCount++;
+    }
+  }
 }
-// Function to add Element to CardContainer
-function addCardElements(character){
-    const newCardElement = document.createElement('article')
-    newCardElement.classList.add('cards')
-    cardContainerElement.append(newCardElement)
-  
-    const newImageElement = document.createElement('img')
-    newImageElement.setAttribute('src', character.image)
-    newCardElement.append(newImageElement)
-  
-    const paragraphElement = document.createElement('p')
-    paragraphElement.textContent = character.name;
-    newCardElement.append(paragraphElement)
 
-    const paragraphStatusElement = document.createElement('p')
-    paragraphStatusElement.textContent = character.status;
-    newCardElement.append(paragraphStatusElement)
+// Function to add Element to CardContainer
+function addCardElements(filteredCharacters) {
+
+    const cardContainerElement = document.querySelector(".cards-container")
+
+    filteredCharacters.forEach((character) => {
+      const newCardElement = document.createElement("article");
+      newCardElement.classList.add("cards")
+      cardContainerElement.append(newCardElement)
+
+      const newImageElement = document.createElement("img")
+      newImageElement.setAttribute("src", character.image)
+      newCardElement.append(newImageElement)
+
+      const paragraphElement = document.createElement("p")
+      paragraphElement.textContent = character.name
+      newCardElement.append(paragraphElement)
+
+      const paragraphStatusElement = document.createElement("p")
+      paragraphStatusElement.textContent = character.status
+      newCardElement.append(paragraphStatusElement)
+    });
 }
