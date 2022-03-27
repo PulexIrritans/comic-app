@@ -2,9 +2,6 @@
 @import "_fonts.css";
 @import "_colors.css";
 
-* {
-  box-sizing: border-box;
-}
 
 ul {
   list-style: none;
